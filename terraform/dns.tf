@@ -4,6 +4,7 @@ resource "cloudflare_dns_record" "nginx" {
     name = "nginx"
     type = "CNAME"
 
-    value = "${cloudflare_zero_trust_tunnel_cloudflared.server.id}.cfargotunnel.com"
+    content = "${cloudflare_zero_trust_tunnel_cloudflared.server.id}.cfargotunnel.com"
+    ttl = 1
     proxied = true
 }
