@@ -1,3 +1,3 @@
-data "cloudflare_zones" "main"{
+data "cloudflare_zone" "main"{
     name = var.domain
 }

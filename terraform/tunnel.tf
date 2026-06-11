@@ -1,4 +1,4 @@
-resource "random_tunnel_id" "tunnel_id"{
+resource "random_password" "tunnel_secret"{
     length = 32
     special = false
 }
@@ -6,5 +6,5 @@ resource "random_tunnel_id" "tunnel_id"{
 resource "cloudflare_tunnel" "server"{
     account_id = var.cloudflare_account_id
     name = "server"
-    secret = base64encode(random_tunnel_id.tunnel_id.result)
+    secret = base64encode(random_password.tunnel_secret.result)
 }
