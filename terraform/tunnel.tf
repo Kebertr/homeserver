@@ -11,9 +11,9 @@ resource "cloudflare_zero_trust_tunnel_cloudflared" "server"{
 }
 
 # This is for kubernetes secret
-resource "kubernetes_secret" "tunnel_credentials" {
+resource "kubernetes_secret_v1" "tunnel-credentials" {
     metadata {
-        name = "tunnel_credentials"
+        name = "tunnel-credentials"
         namespace = "default"
     }
     data = {
