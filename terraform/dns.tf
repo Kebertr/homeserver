@@ -1,4 +1,4 @@
-resouce "cloudflare_dns_record" "nginx" {
+resource "cloudflare_dns_record" "nginx" {
     zone_id = data.cloudflare_zone.main.id
 
     name = "nginx"
