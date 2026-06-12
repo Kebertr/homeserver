@@ -14,7 +14,7 @@ resource "cloudflare_zero_trust_tunnel_cloudflared" "server"{
 resource "kubernetes_secret_v1" "tunnel-credentials" {
     metadata {
         name = "tunnel-credentials"
-        namespace = "default"
+        namespace = "cloudflare"
     }
     data = {
     "credentials.json" = jsonencode({
