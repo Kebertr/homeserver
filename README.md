@@ -1,4 +1,9 @@
-A hooby project with server running on linux machine, K3s and Cloudflare tunnel atm.
+Welcome to a fun hooby project with server running on linux machine, K3s and Cloudflare tunneling!
+
+# Setup to the server
+Clone this repository:
+```git clone https://github.com/Kebertr/homeserver.git```
+
 K3s:
 Command for a single node K3s
 ```curl -sfL https://get.k3s.io | sh -```
@@ -6,28 +11,36 @@ Command for a single node K3s
 Uninstall it
 ```/usr/local/bin/k3s-uninstall.sh```
 
-Some useful commands:
-nodes:
-```kubectl get nodes```
+Guide to recreate the server:
+Kubernetes node
+```curl -sfL https://get.k3s.io | sh -```
 
-pods
-```kubectl get pods -A```
+argocd:
+```kubectl create namespace argocd```
 
-services
-```kubectl get svc -A```
+```kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml```
 
-ingress
-```kubectl get ingress -A```
+clone the homeserver-gitops repo, i do with https:
+```git clone https://github.com/Kebertr/homeserver-gitops.git```
 
-namespaces
-```kubectl get namespaces```
+Apply applications with ArgoCD, command from /homeserver-gitops
+```kubectl apply -f /applications/[name of file]```
 
-Cloudflare tunnel:
-Creating:
-```cloudflared tunnel run [name]```
+Create a bucket in minio for terraform states. I use name terraform-state
 
-login to Cloudflare:
-```cloudflared tunnel login```
+Configure backend.hcl to use the url from tailscale
 
-run it:
-```cloudflared tunnel run homelab```
+# Terraform
+```terraform init -backend-config=backend.hcl```
+
+```terraform validate```
+
+```terraform plan```
+
+If everything is alright. Which it should be. Then run 
+```terraform apply```
+
+# Documentation
+Terraform: terraform/README.md
+Cloudflare: terraform/README.md
+
