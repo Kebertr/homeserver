@@ -18,7 +18,7 @@ and choose the url for minio-Api
 
 Then just pull from this repository and run
 
-```terraform init``
+```terraform init```
 
 This will download cloudflare and hashicorp/random, which are necessary providers
 
