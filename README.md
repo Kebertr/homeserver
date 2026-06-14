@@ -42,5 +42,5 @@ If everything is alright. Which it should be. Then run
 
 # Documentation
 Terraform: terraform/README.md
-Cloudflare: terraform/README.md
+Kubernetess application is in https://github.com/Kebertr/homeserver-gitops
 
