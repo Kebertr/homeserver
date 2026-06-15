@@ -10,10 +10,25 @@ jobs:
   test:
     runs-on: homeserver
 
+    env:
+      TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      MINIO_ENDPOINT: ${{ secrets.MINIO_ENDPOINT }}
+      MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
+      MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: install Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Version
+        uses: hashicorp/setup-terraform@v1
+
+        
       - name: Run tests
         run: |
           # Add your test commands here
