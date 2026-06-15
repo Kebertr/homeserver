@@ -45,6 +45,7 @@ jobs:
           secret_key = "${MINIO_SECRET_KEY}"
           EOF
       - name: Terraform Init
+        working-directory: terraform
         run: terraform init -backend-config=backend.hcl
       
       - name: Terraform validate
