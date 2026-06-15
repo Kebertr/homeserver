@@ -37,7 +37,7 @@ jobs:
       
       - name: Create backend.hcl
         run: |
-          cat > backend.hcl <<EOF
+          cat > terraform/backend.hcl <<EOF
           bucket = "terraform-state"
           key = "homeserver/terraform.tfstate"
           endpoint = "${MINIO_ENDPOINT}"
