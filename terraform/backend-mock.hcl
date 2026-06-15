@@ -1,6 +1,10 @@
 bucket = "terraform-state"
 key = "server/terraform.tfstate"
 
+access_key="your access"
+
+secret_key="your secret"
+
 endpoints = {
     s3 = "tailscale url"
 }

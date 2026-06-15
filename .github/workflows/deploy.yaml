@@ -1,0 +1,69 @@
+name: homeserver tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: homeserver
+
+    env:
+      TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      MINIO_ENDPOINT: ${{ secrets.MINIO_ENDPOINT }}
+      MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
+      MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
+
+    steps:
+
+
+      - name: Terraform test
+        run: echo "Starting to run terraform tests"
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      - name: Terraform Version
+        run: terraform version
+      
+      - name: Create backend.hcl
+        run: |
+          cat > terraform/backend.hcl <<EOF
+          bucket = "terraform-state"
+          key = "homeserver/terraform.tfstate"
+          region = "eu-north-1"
+
+          endpoint = "${MINIO_ENDPOINT}"
+          access_key = "${MINIO_ACCESS_KEY}"
+          secret_key = "${MINIO_SECRET_KEY}"
+          use_path_style              = true
+          skip_credentials_validation = true
+          skip_requesting_account_id  = true
+
+          EOF
+      - name: Terraform Init
+        working-directory: terraform
+        run: terraform init -backend-config=backend.hcl
+      
+      - name: Terraform validate
+        working-directory: terraform
+        run: terraform validate
+
+      - name: Terraform plan
+        working-directory: terraform
+        run: terraform validate
+
+      - name: Terraform end
+        run: echo "It seems like all worked"
+
+
+      
