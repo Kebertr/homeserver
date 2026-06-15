@@ -40,9 +40,15 @@ jobs:
           cat > terraform/backend.hcl <<EOF
           bucket = "terraform-state"
           key = "homeserver/terraform.tfstate"
+          region = "eu-north-1"
+
           endpoint = "${MINIO_ENDPOINT}"
           access_key = "${MINIO_ACCESS_KEY}"
           secret_key = "${MINIO_SECRET_KEY}"
+          use_path_style              = true
+          skip_credentials_validation = true
+          skip_requesting_account_id  = true
+
           EOF
       - name: Terraform Init
         working-directory: terraform
