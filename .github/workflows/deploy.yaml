@@ -48,10 +48,12 @@ jobs:
         run: terraform init -backend-config=backend.hcl
       
       - name: Terraform validate
+        working-directory: terraform
         run: terraform validate
 
       - name: Terraform plan
-        run: terraform plan
+        working-directory: terraform
+        run: terraform validate
 
       - name: Terraform end
         run: echo "It seems like all worked"
