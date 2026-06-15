@@ -31,7 +31,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Version
-        uses: terraform version
+        run: terraform version
       
       - name: Create backend.hcl
         run: |
