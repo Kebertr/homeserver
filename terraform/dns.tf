@@ -20,3 +20,13 @@ resource "cloudflare_dns_record" "valhall" {
     proxied = true
 }
 
+resource "cloudflare_dns_record" "auth" {
+    zone_id = data.cloudflare_zone.main.id
+
+    name = "auth"
+    type = "CNAME"
+
+    content = "${cloudflare_zero_trust_tunnel_cloudflared.server.id}.cfargotunnel.com"
+    ttl = 1
+    proxied = true
+}
