@@ -9,6 +9,20 @@ terraform{
         random = {
             source = "hashicorp/random"
         }
+
+        helm = {
+            source  = "hashicorp/helm"
+            version = "~> 2.17"
+        }
+
+        kubectl = {
+            source  = "gavinbunney/kubectl"
+            version = "~> 1.14"
+        }
+
+        kubernetes = {
+            source = "hashicorp/kubernetes"
+        }
     }
 }
 
@@ -18,4 +32,14 @@ provider "kubernetes" {
 
 provider "cloudflare" {
   api_token = var.cloudflare_api_token
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+}
+
+provider "kubectl" {
+  config_path = "~/.kube/config"
 }
