@@ -5,7 +5,7 @@ resource "random_password" "tunnel_secret"{
 
 resource "cloudflare_zero_trust_tunnel_cloudflared" "server"{
     account_id = var.cloudflare_account_id
-    name = "server"
+    name = "homeserver"
     tunnel_secret = base64encode(random_password.tunnel_secret.result)
     config_src = "cloudflare"
 }
