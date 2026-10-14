@@ -10,12 +10,19 @@ resource "cloudflare_zero_trust_tunnel_cloudflared" "server"{
     config_src = "cloudflare"
 }
 
+resource "kubernetes_namespace_v1" "cloudflare" {
+    metadata {
+        name = "cloudflare"
+    }
+}
+
 # This is for kubernetes secret
 resource "kubernetes_secret_v1" "tunnel-credentials" {
     metadata {
         name = "tunnel-credentials"
-        namespace = "cloudflare"
+        namespace = kubernetes_namespace_v1.cloudflare.metadata[0].name
     }
+    depends_on = [kubernetes_namespace_v1.cloudflare]
     data = {
     "credentials.json" = jsonencode({
       AccountTag   = var.cloudflare_account_id

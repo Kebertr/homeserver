@@ -52,3 +52,27 @@ resource "cloudflare_dns_record" "upload" {
     ttl = 1
     proxied = true
 }
+
+resource "cloudflare_dns_record" "dev_leetify" {
+    zone_id = data.cloudflare_zone.main.id
+
+    name = "dev_leetify"
+    type = "CNAME"
+
+    content = "${cloudflare_zero_trust_tunnel_cloudflared.server.id}.cfargotunnel.com"
+    ttl = 1
+    proxied = true
+}
+
+resource "cloudflare_dns_record" "leetify" {
+    zone_id = data.cloudflare_zone.main.id
+
+    name = "leetify"
+    type = "CNAME"
+
+    content = "${cloudflare_zero_trust_tunnel_cloudflared.server.id}.cfargotunnel.com"
+    ttl = 1
+    proxied = true
+}
+
+
