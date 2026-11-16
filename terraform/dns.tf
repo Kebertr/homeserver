@@ -76,3 +76,15 @@ resource "cloudflare_dns_record" "leetify" {
 }
 
 
+resource "cloudflare_dns_record" "minecraft" {
+    zone_id = data.cloudflare_zone.main.id
+
+    name = "minecraft"
+    type = "CNAME"
+
+    content = "${cloudflare_zero_trust_tunnel_cloudflared.server.id}.cfargotunnel.com"
+    ttl = 1
+    proxied = true
+}
+
+
